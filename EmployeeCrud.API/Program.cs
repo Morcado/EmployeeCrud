@@ -1,3 +1,4 @@
+using EmployeeCRUD.Data.Attributes;
 using EmployeeCRUD.Data.DbContexts;
 using EmployeeCRUD.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -11,13 +12,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<DataContext>(optionsAction =>
+builder.Services.AddDbContext<DataContext>((optionsBuilder, optionsAction) =>
 {
-    optionsAction.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    optionsAction.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        .AddInterceptors(optionsBuilder.GetRequiredService<SoftDeleteInterceptor>());
 });
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IEmpleadoRepository, EmpleadoRepository>();
 builder.Services.AddScoped<IDireccionRepository, DireccionRepository>();
+
+builder.Services.AddSingleton<SoftDeleteInterceptor>();
 
 var app = builder.Build();
 

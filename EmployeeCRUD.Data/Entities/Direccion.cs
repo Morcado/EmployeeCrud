@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EmployeeCRUD.Data.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeCRUD.Data.Entities
 {
-    public class Direccion
+    public class Direccion : ISoftDeleatable
     {
         [Key]
         public Guid Id { get; set; }
@@ -14,6 +15,8 @@ namespace EmployeeCRUD.Data.Entities
         [ForeignKey("IdEstado")]
         public virtual Estado? Estado { get; set; }
         public required Guid IdEmpleado { get; set; }
-        public virtual Empleado? Empleado { get; set; } 
+        public virtual Empleado? Empleado { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOnUtc { get; set; }
     }
 }

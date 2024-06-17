@@ -21,12 +21,13 @@ namespace EmployeeCRUD.Data.Repositories
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return context.Empleados.Where(d => d.Id == id).FirstOrDefault();
+            var empleado = context.Empleados.Where(d => d.Id == id).FirstOrDefault();
+            return empleado;
         }
 
         public IEnumerable<Empleado> GetEmpleados()
         {
-            return [.. context.Empleados];
+            return context.Empleados.ToList();
         }
 
         public void InsertEmpleado(Empleado empleado)
@@ -34,7 +35,7 @@ namespace EmployeeCRUD.Data.Repositories
             ArgumentNullException.ThrowIfNull(empleado);
 
             empleado.Id = Guid.NewGuid();
-            context.Add(empleado);
+            context.Empleados.Add(empleado);
         }
 
         public void Save()

@@ -4,6 +4,7 @@ using EmployeeCRUD.Data.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeCRUD.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240617184929_Fix")]
+    partial class Fix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,17 +37,11 @@ namespace EmployeeCRUD.Data.Migrations
                     b.Property<string>("Calle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("IdEmpleado")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("IdEstado")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Numero")
                         .HasColumnType("nvarchar(max)");
@@ -68,9 +65,6 @@ namespace EmployeeCRUD.Data.Migrations
                     b.Property<string>("ApellidoPaterno")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("Edad")
                         .HasColumnType("int");
 
@@ -87,9 +81,6 @@ namespace EmployeeCRUD.Data.Migrations
                     b.Property<Guid?>("IdTipoEmpleado")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
 
@@ -102,9 +93,6 @@ namespace EmployeeCRUD.Data.Migrations
                     b.HasIndex("IdGradoEstudio");
 
                     b.HasIndex("IdTipoEmpleado");
-
-                    b.HasIndex("IsDeleted")
-                        .HasFilter("IsDeleted = 0");
 
                     b.ToTable("Empleados");
                 });
@@ -143,9 +131,6 @@ namespace EmployeeCRUD.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime?>("DeletedOnUtc")
-                        .HasColumnType("datetime2");
-
                     b.Property<Guid>("EmpleadoId")
                         .HasColumnType("uniqueidentifier");
 
@@ -154,9 +139,6 @@ namespace EmployeeCRUD.Data.Migrations
 
                     b.Property<Guid>("IdEmpleado")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");

@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using EmployeeCRUD.Data.Entities.Base;
+using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeCRUD.Data.Entities
 {
-    public class Telefono
+    public class Telefono : ISoftDeleatable
     {
         [Key]
         public Guid Id { get; set; }
@@ -11,5 +12,7 @@ namespace EmployeeCRUD.Data.Entities
         public required int Numero { get; set; }
         public required int Extension { get; set; }
         public string? Tipo { get; set; } // mobil o particular
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedOnUtc { get; set; }
     }
 }
