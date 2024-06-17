@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using EmployeeCRUD.Data.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EmployeeCrud.API.Controllers
 {
@@ -6,14 +8,20 @@ namespace EmployeeCrud.API.Controllers
     [ApiController]
     [Route("[controller]")]
     public class EmployeeController : ControllerBase
-    {
-        private readonly ILogger<EmployeeController> _logger;
-
-        public EmployeeController(ILogger<EmployeeController> logger)
+    {   private readonly IEmpleadoRepository empleadoRepository;
+        
+        public EmployeeController(IEmpleadoRepository empleadoRepository)
         {
-            _logger = logger;
+            this.empleadoRepository = empleadoRepository;
+            //this.mapper = mapper;
         }
 
+        [HttpGet]
+        public IActionResult GetEmpleados()
+        {
+            var empleados = empleadoRepository.GetEmpleados();
+            return Ok(empleados);
+        }
     }
     
 }
