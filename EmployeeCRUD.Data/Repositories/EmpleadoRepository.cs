@@ -1,5 +1,6 @@
 ﻿using EmployeeCRUD.Data.DbContexts;
 using EmployeeCRUD.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeCRUD.Data.Repositories
 {
@@ -7,40 +8,40 @@ namespace EmployeeCRUD.Data.Repositories
     {
         private readonly DataContext context = context;
 
-        public void DeleteEmpleado(Guid id)
+        public async Task DeleteEmpleado(Guid id)
         {
-            Empleado? empleado = context.Empleados.Find(id);
+            Empleado? empleado = await context.Empleados.FindAsync(id);
             ArgumentNullException.ThrowIfNull(empleado, nameof(empleado));
             context.Empleados.Remove(empleado);
         }
 
-        public Empleado? GetEmpleadoByID(Guid id)
+        public async Task<Empleado?> GetEmpleadoByID(Guid id)
         {
             if (id == Guid.Empty)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var empleado = context.Empleados.Where(d => d.Id == id).FirstOrDefault();
+            var empleado = await context.Empleados.Where(d => d.Id == id).FirstOrDefaultAsync();
             return empleado;
         }
 
-        public IEnumerable<Empleado> GetEmpleados()
+        public async Task<IEnumerable<Empleado>> GetEmpleados()
         {
-            return context.Empleados.ToList();
+            return await context.Empleados.ToListAsync();
         }
 
-        public void InsertEmpleado(Empleado empleado)
+        public async Task InsertEmpleado(Empleado empleado)
         {
             ArgumentNullException.ThrowIfNull(empleado);
 
             empleado.Id = Guid.NewGuid();
-            context.Empleados.Add(empleado);
+            await context.Empleados.AddAsync(empleado);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         public void UpdateEmpleado(Empleado empleado)

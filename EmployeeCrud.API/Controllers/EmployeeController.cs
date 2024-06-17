@@ -20,16 +20,16 @@ namespace EmployeeCrud.API.Controllers
         }
 
         [HttpGet()]
-        public IActionResult GetEmpleados()
+        public async Task<IActionResult> GetEmpleados()
         {
-            var empleados = empleadoRepository.GetEmpleados();
+            var empleados = await empleadoRepository.GetEmpleados();
             return Ok(empleados);
         }
 
         [HttpGet("{id}", Name = "GetEmpleado")]
-        public IActionResult GetEmpleadoById(Guid id)
+        public async Task<IActionResult> GetEmpleadoById(Guid id)
         {
-            var empleado = empleadoRepository.GetEmpleadoByID(id);
+            var empleado = await empleadoRepository.GetEmpleadoByID(id);
             if (empleado == null)
             {
                 return NotFound();
@@ -38,11 +38,11 @@ namespace EmployeeCrud.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateEmpleado(EmpleadoCreateDto empleadoCreate)
+        public async Task<IActionResult> CreateEmpleado(EmpleadoCreateDto empleadoCreate)
         {
             var empleado = mapper.Map<Empleado>(empleadoCreate);
-            empleadoRepository.InsertEmpleado(empleado);
-            empleadoRepository.Save();
+            await empleadoRepository.InsertEmpleado(empleado);
+            await empleadoRepository.SaveAsync();
 
             var empleadoReturn = mapper.Map<EmpleadoDto>(empleado);
 
@@ -54,17 +54,34 @@ namespace EmployeeCrud.API.Controllers
             empleadoReturn);*/ 
         }
 
-        [HttpDelete("{id}", Name = "GetEmpleado")]
-        public IActionResult DeleteEmpleado(Guid id)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateEmpleado(Guid id, EmpleadoUpdateDto empleadoUpdate)
         {
-            var empleados = empleadoRepository.GetEmpleadoByID(id);
+            var empleado = await empleadoRepository.GetEmpleadoByID(id);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+
+            mapper.Map(empleadoUpdate, empleado);
+            empleadoRepository.UpdateEmpleado(empleado);
+            await empleadoRepository.SaveAsync();
+
+            return NoContent();
+        }
+
+
+        [HttpDelete("{id}", Name = "GetEmpleado")]
+        public async Task<IActionResult> DeleteEmpleado(Guid id)
+        {
+            var empleados = await empleadoRepository.GetEmpleadoByID(id);
             if (empleados == null)
             {
                 return NotFound();
             }
 
-            empleadoRepository.DeleteEmpleado(id);
-            empleadoRepository.Save();
+            await empleadoRepository.DeleteEmpleado(id);
+            await empleadoRepository.SaveAsync();
             return NoContent();
         }
     }
