@@ -23,7 +23,7 @@ namespace EmployeeCrud.API.Controllers
         public async Task<IActionResult> GetEmpleados()
         {
             var empleados = await empleadoRepository.GetEmpleados();
-            return Ok(empleados);
+            return Ok(mapper.Map<EmpleadoDto[]>(empleados));
         }
 
         [HttpGet("{id}", Name = "GetEmpleado")]
@@ -34,7 +34,7 @@ namespace EmployeeCrud.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(empleado);
+            return Ok(mapper.Map<EmpleadoDto>(empleado));
         }
 
         [HttpPost]
@@ -44,9 +44,7 @@ namespace EmployeeCrud.API.Controllers
             await empleadoRepository.InsertEmpleado(empleado);
             await empleadoRepository.SaveAsync();
 
-            var empleadoReturn = mapper.Map<EmpleadoDto>(empleado);
-
-            return Created("GetEmpleado", empleadoReturn);
+            return Created("GetEmpleado", mapper.Map<EmpleadoDto>(empleado));
             /*return CreatedAtRoute("GetEmpleado", new
             {
                 IdEmpleado = empleadoReturn.Id

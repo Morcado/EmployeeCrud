@@ -4,47 +4,38 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeCRUD.Data.Repositories
 {
-    public class EmpleadoRepository(DataContext context) : IEmpleadoRepository, IDisposable
+    public class TelefonoRepository(DataContext context) : ITelefonoRepository, IDisposable
     {
         private readonly DataContext context = context;
 
-        public async Task DeleteEmpleado(int? id)
+        public async Task DeleteTelefono(int? id)
         {
-            Empleado? empleado = await context.Empleados.FindAsync(id);
-            ArgumentNullException.ThrowIfNull(empleado, nameof(empleado));
-            context.Empleados.Remove(empleado);
+            Telefono? telefono = await context.Telefonos.FindAsync(id);
+            ArgumentNullException.ThrowIfNull(telefono, nameof(telefono));
+            context.Telefonos.Remove(telefono);
         }
 
-        public async Task<Empleado?> GetEmpleadoByID(int? id)
+        public async Task<Telefono?> GetTelefonoByID(int? id)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var empleado = await context.Empleados
-                .Where(d => d.Id == id)
-                .Include(b => b.Telefonos)
-                .Include(b => b.Direccion)
-                .Include(b => b.GradoEstudio)
-                .Include(b => b.TipoEmpleado)
-                .FirstOrDefaultAsync();
-
-            return empleado;
+            var telefono = await context.Telefonos.Where(d => d.Id == id).FirstOrDefaultAsync();
+            return telefono;
         }
 
-        public async Task<IEnumerable<Empleado>> GetEmpleados()
+        public async Task<IEnumerable<Telefono>> GetTelefonos()
         {
-            return await context.Empleados
-                .ToListAsync();
+            return await context.Telefonos.ToListAsync();
         }
 
-        public async Task InsertEmpleado(Empleado empleado)
+        public async Task InsertTelefono(Telefono telefono)
         {
-            ArgumentNullException.ThrowIfNull(empleado);
+            ArgumentNullException.ThrowIfNull(telefono);
 
-            //empleado.Id = int.Newint();
-            await context.Empleados.AddAsync(empleado);
+            await context.Telefonos.AddAsync(telefono);
         }
 
         public async Task SaveAsync()
@@ -52,7 +43,7 @@ namespace EmployeeCRUD.Data.Repositories
             await context.SaveChangesAsync();
         }
 
-        public void UpdateEmpleado(Empleado empleado)
+        public void UpdateTelefono(Telefono telefono)
         {
             // not implemented
         }
@@ -74,7 +65,7 @@ namespace EmployeeCRUD.Data.Repositories
         }
 
         // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~EmpleadoRepository()
+        // ~TelefonoRepository()
         // {
         //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
         //     Dispose(disposing: false);

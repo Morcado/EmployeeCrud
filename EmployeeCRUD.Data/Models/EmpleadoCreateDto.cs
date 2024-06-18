@@ -1,8 +1,4 @@
-﻿using EmployeeCRUD.Data.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace EmployeeCRUD.Data.Models
+﻿namespace EmployeeCRUD.Data.Models
 {
     public class EmpleadoCreateDto
     {

@@ -11,8 +11,5 @@ namespace EmployeeCRUD.Data.Models
         public int IdEstado { get; set; }
         public Estado? Estado { get; set; }
         public int IdEmpleado { get; set; }
-        public Empleado? Empleado { get; set; }
-        public bool IsDeleted { get; set; }
-        public DateTime? DeletedOnUtc { get; set; }
     }
 }

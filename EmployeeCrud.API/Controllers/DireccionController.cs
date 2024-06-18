@@ -22,8 +22,8 @@ namespace DireccionCrud.API.Controllers
         [HttpGet()]
         public async Task<IActionResult> GetDireccions()
         {
-            var Direccions = await DireccionRepository.GetDirecciones();
-            return Ok(Direccions);
+            var direcciones = await DireccionRepository.GetDirecciones();
+            return Ok(mapper.Map<DireccionDto[]>(direcciones));
         }
 
         [HttpGet("{id}", Name = "GetDireccion")]
@@ -34,7 +34,7 @@ namespace DireccionCrud.API.Controllers
             {
                 return NotFound();
             }
-            return Ok(direccion);
+            return Ok(mapper.Map<DireccionDto>(direccion));
         }
 
         [HttpPost]
@@ -44,9 +44,7 @@ namespace DireccionCrud.API.Controllers
             await DireccionRepository.InsertDireccion(direccion);
             await DireccionRepository.SaveAsync();
 
-            var DireccionReturn = mapper.Map<DireccionDto>(direccion);
-
-            return Created("GetDireccion", DireccionReturn);
+            return Created("GetDireccion", mapper.Map<DireccionDto>(direccion));
             /*return CreatedAtRoute("GetDireccion", new
             {
                 IdDireccion = DireccionReturn.Id

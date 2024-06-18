@@ -21,13 +21,16 @@ namespace EmployeeCRUD.Data.Entities
         [ForeignKey(nameof(IdDireccion))]
         public virtual Direccion? Direccion { get; set; }
         public int? IdDireccion { get; set; }
-        public ICollection<Telefono> Telefonos { get; set; } = new List<Telefono>();
+        public virtual ICollection<Telefono> Telefonos { get; set; } = new List<Telefono>();
+        
         [ForeignKey("IdGradoEstudio")]
         public virtual GradoEstudio? GradoEstudio { get; set; }
         public int? IdGradoEstudio { get; set; }
+        
         [ForeignKey("IdTipoEmpleado")]
         public virtual TipoEmpleado? TipoEmpleado { get; set; }
         public int? IdTipoEmpleado { get; set; }
+        
         public bool IsDeleted { get; set; }
         public DateTime? DeletedOnUtc { get; set; }
     }

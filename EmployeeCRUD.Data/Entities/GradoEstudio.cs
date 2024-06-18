@@ -1,5 +1,4 @@
-﻿using EmployeeCRUD.Data.Entities.Base;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace EmployeeCRUD.Data.Entities
 {
