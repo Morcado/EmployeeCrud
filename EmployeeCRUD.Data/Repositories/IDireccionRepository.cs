@@ -4,11 +4,11 @@ namespace EmployeeCRUD.Data.Repositories
 {
     public interface IDireccionRepository : IDisposable
     {
-        IEnumerable<Direccion> GetDirecciones();
-        Direccion? GetDireccionByID(Guid id);
-        void InsertDireccion(Direccion Direccion);
-        void DeleteDireccion(Guid id);
+        Task<IEnumerable<Direccion>> GetDirecciones();
+        Task<Direccion?> GetDireccionByID(int? id);
+        Task InsertDireccion(Direccion Direccion);
+        Task DeleteDireccion(int? id);
         void UpdateDireccion(Direccion Direccion);
-        void Save();
+        Task SaveAsync();
     }
 }

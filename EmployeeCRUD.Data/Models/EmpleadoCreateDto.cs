@@ -11,8 +11,8 @@ namespace EmployeeCRUD.Data.Models
         public required string? ApellidoMaterno { get; set; }
         public required int Edad { get; set; }
         public required char Genero { get; set; }
-        public Guid? IdDireccion { get; set; }
-        public Guid? IdGradoEstudio { get; set; }
-        public Guid? IdTipoEmpleado { get; set; }
+        public int? IdDireccion { get; set; }
+        public int? IdGradoEstudio { get; set; }
+        public int? IdTipoEmpleado { get; set; }
     }
 }

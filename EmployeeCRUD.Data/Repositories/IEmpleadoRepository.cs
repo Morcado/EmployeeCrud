@@ -10,9 +10,9 @@ namespace EmployeeCRUD.Data.Repositories
     public interface IEmpleadoRepository : IDisposable
     {
         Task<IEnumerable<Empleado>> GetEmpleados();
-        Task<Empleado?> GetEmpleadoByID(Guid id);
+        Task<Empleado?> GetEmpleadoByID(int? id);
         Task InsertEmpleado(Empleado empleado);
-        Task DeleteEmpleado(Guid id);
+        Task DeleteEmpleado(int? id);
         void UpdateEmpleado(Empleado empleado);
         Task SaveAsync();
     }

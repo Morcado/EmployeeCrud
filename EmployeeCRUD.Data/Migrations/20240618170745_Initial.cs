@@ -15,7 +15,8 @@ namespace EmployeeCRUD.Data.Migrations
                 name: "Estado",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -27,7 +28,8 @@ namespace EmployeeCRUD.Data.Migrations
                 name: "GradoEstudio",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -39,7 +41,8 @@ namespace EmployeeCRUD.Data.Migrations
                 name: "TipoEmpleado",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -51,12 +54,15 @@ namespace EmployeeCRUD.Data.Migrations
                 name: "Direcciones",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Calle = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Numero = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CP = table.Column<int>(type: "int", nullable: false),
-                    IdEstado = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdEmpleado = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdEstado = table.Column<int>(type: "int", nullable: false),
+                    IdEmpleado = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,15 +79,18 @@ namespace EmployeeCRUD.Data.Migrations
                 name: "Empleados",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Nombre = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApellidoPaterno = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ApellidoMaterno = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Edad = table.Column<int>(type: "int", nullable: false),
                     Genero = table.Column<string>(type: "nvarchar(1)", nullable: false),
-                    IdDireccion = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdGradoEstudio = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdTipoEmpleado = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    IdDireccion = table.Column<int>(type: "int", nullable: true),
+                    IdGradoEstudio = table.Column<int>(type: "int", nullable: true),
+                    IdTipoEmpleado = table.Column<int>(type: "int", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -90,32 +99,32 @@ namespace EmployeeCRUD.Data.Migrations
                         name: "FK_Empleados_Direcciones_IdDireccion",
                         column: x => x.IdDireccion,
                         principalTable: "Direcciones",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Empleados_GradoEstudio_IdGradoEstudio",
                         column: x => x.IdGradoEstudio,
                         principalTable: "GradoEstudio",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Empleados_TipoEmpleado_IdTipoEmpleado",
                         column: x => x.IdTipoEmpleado,
                         principalTable: "TipoEmpleado",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Telefono",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdEmpleado = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    EmpleadoId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdEmpleado = table.Column<int>(type: "int", nullable: false),
+                    EmpleadoId = table.Column<int>(type: "int", nullable: false),
                     Numero = table.Column<int>(type: "int", nullable: false),
                     Extension = table.Column<int>(type: "int", nullable: false),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -137,7 +146,8 @@ namespace EmployeeCRUD.Data.Migrations
                 name: "IX_Empleados_IdDireccion",
                 table: "Empleados",
                 column: "IdDireccion",
-                unique: true);
+                unique: true,
+                filter: "[IdDireccion] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Empleados_IdGradoEstudio",
@@ -148,6 +158,12 @@ namespace EmployeeCRUD.Data.Migrations
                 name: "IX_Empleados_IdTipoEmpleado",
                 table: "Empleados",
                 column: "IdTipoEmpleado");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Empleados_IsDeleted",
+                table: "Empleados",
+                column: "IsDeleted",
+                filter: "IsDeleted = 0");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Telefono_EmpleadoId",

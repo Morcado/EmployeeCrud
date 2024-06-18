@@ -24,9 +24,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Direccion", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CP")
                         .HasColumnType("int");
@@ -37,11 +39,11 @@ namespace EmployeeCRUD.Data.Migrations
                     b.Property<DateTime?>("DeletedOnUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IdEmpleado")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("IdEmpleado")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("IdEstado")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("IdEstado")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -58,9 +60,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Empleado", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApellidoMaterno")
                         .HasColumnType("nvarchar(max)");
@@ -78,14 +82,14 @@ namespace EmployeeCRUD.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<Guid?>("IdDireccion")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("IdDireccion")
+                        .HasColumnType("int");
 
-                    b.Property<Guid?>("IdGradoEstudio")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("IdGradoEstudio")
+                        .HasColumnType("int");
 
-                    b.Property<Guid?>("IdTipoEmpleado")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int?>("IdTipoEmpleado")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -111,9 +115,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Estado", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -125,9 +131,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.GradoEstudio", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -139,21 +147,23 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Telefono", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime?>("DeletedOnUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("EmpleadoId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Extension")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("IdEmpleado")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("IdEmpleado")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -173,9 +183,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.TipoEmpleado", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");

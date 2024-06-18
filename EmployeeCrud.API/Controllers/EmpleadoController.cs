@@ -9,11 +9,11 @@ namespace EmployeeCrud.API.Controllers
  
     [ApiController]
     [Route("[controller]")]
-    public class EmployeeController : ControllerBase
+    public class EmpleadoController : ControllerBase
     {   private readonly IEmpleadoRepository empleadoRepository;
         private readonly IMapper mapper;
         
-        public EmployeeController(IEmpleadoRepository empleadoRepository, IMapper mapper)
+        public EmpleadoController(IEmpleadoRepository empleadoRepository, IMapper mapper)
         {
             this.empleadoRepository = empleadoRepository;
             this.mapper = mapper;
@@ -27,7 +27,7 @@ namespace EmployeeCrud.API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetEmpleado")]
-        public async Task<IActionResult> GetEmpleadoById(Guid id)
+        public async Task<IActionResult> GetEmpleadoById(int id)
         {
             var empleado = await empleadoRepository.GetEmpleadoByID(id);
             if (empleado == null)
@@ -55,7 +55,7 @@ namespace EmployeeCrud.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateEmpleado(Guid id, EmpleadoUpdateDto empleadoUpdate)
+        public async Task<IActionResult> UpdateEmpleado(int id, EmpleadoUpdateDto empleadoUpdate)
         {
             var empleado = await empleadoRepository.GetEmpleadoByID(id);
             if (empleado == null)
@@ -72,7 +72,7 @@ namespace EmployeeCrud.API.Controllers
 
 
         [HttpDelete("{id}", Name = "GetEmpleado")]
-        public async Task<IActionResult> DeleteEmpleado(Guid id)
+        public async Task<IActionResult> DeleteEmpleado(int id)
         {
             var empleados = await empleadoRepository.GetEmpleadoByID(id);
             if (empleados == null)

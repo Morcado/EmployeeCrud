@@ -1,5 +1,6 @@
 ﻿using EmployeeCRUD.Data.DbContexts;
 using EmployeeCRUD.Data.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeCRUD.Data.Repositories
 {
@@ -7,39 +8,40 @@ namespace EmployeeCRUD.Data.Repositories
     {
         private readonly DataContext context = context;
 
-        public void DeleteDireccion(Guid id)
+        public async Task DeleteDireccion(int? id)
         {
-            Direccion? Direccion = context.Direcciones.Find(id);
+            Direccion? Direccion = await context.Direcciones.FindAsync(id);
             ArgumentNullException.ThrowIfNull(Direccion, nameof(Direccion));
             context.Direcciones.Remove(Direccion);
         }
 
-        public Direccion? GetDireccionByID(Guid id)
+        public async Task<Direccion?> GetDireccionByID(int? id)
         {
-            if (id == Guid.Empty)
+            if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            return context.Direcciones.Where(d => d.Id == id).FirstOrDefault();
+            var Direccion = await context.Direcciones.Where(d => d.Id == id).FirstOrDefaultAsync();
+            return Direccion;
         }
 
-        public IEnumerable<Direccion> GetDirecciones()
+        public async Task<IEnumerable<Direccion>> GetDirecciones()
         {
-            return [.. context.Direcciones];
+            return await context.Direcciones.ToListAsync();
         }
 
-        public void InsertDireccion(Direccion Direccion)
+        public async Task InsertDireccion(Direccion Direccion)
         {
             ArgumentNullException.ThrowIfNull(Direccion);
 
-            Direccion.Id = Guid.NewGuid();
-            context.Add(Direccion);
+            //Direccion.Id = int.Newint();
+            await context.Direcciones.AddAsync(Direccion);
         }
 
-        public void Save()
+        public async Task SaveAsync()
         {
-            context.SaveChanges();
+            await context.SaveChangesAsync();
         }
 
         public void UpdateDireccion(Direccion Direccion)

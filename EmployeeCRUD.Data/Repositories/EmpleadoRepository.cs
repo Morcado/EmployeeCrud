@@ -8,16 +8,16 @@ namespace EmployeeCRUD.Data.Repositories
     {
         private readonly DataContext context = context;
 
-        public async Task DeleteEmpleado(Guid id)
+        public async Task DeleteEmpleado(int? id)
         {
             Empleado? empleado = await context.Empleados.FindAsync(id);
             ArgumentNullException.ThrowIfNull(empleado, nameof(empleado));
             context.Empleados.Remove(empleado);
         }
 
-        public async Task<Empleado?> GetEmpleadoByID(Guid id)
+        public async Task<Empleado?> GetEmpleadoByID(int? id)
         {
-            if (id == Guid.Empty)
+            if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
@@ -35,7 +35,7 @@ namespace EmployeeCRUD.Data.Repositories
         {
             ArgumentNullException.ThrowIfNull(empleado);
 
-            empleado.Id = Guid.NewGuid();
+            //empleado.Id = int.Newint();
             await context.Empleados.AddAsync(empleado);
         }
 

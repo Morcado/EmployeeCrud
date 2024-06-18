@@ -12,7 +12,7 @@ namespace EmployeeCRUD.Data.Entities
     public class Empleado : ISoftDeleatable
     {
         [Key]
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public required string? Nombre { get; set; }
         public required string? ApellidoPaterno { get; set; }
         public required string? ApellidoMaterno { get; set; }
@@ -20,14 +20,14 @@ namespace EmployeeCRUD.Data.Entities
         public required char Genero { get; set; } // m o f
         [ForeignKey(nameof(IdDireccion))]
         public virtual Direccion? Direccion { get; set; }
-        public Guid? IdDireccion { get; set; }
+        public int? IdDireccion { get; set; }
         public ICollection<Telefono> Telefonos { get; set; } = new List<Telefono>();
         [ForeignKey("IdGradoEstudio")]
         public virtual GradoEstudio? GradoEstudio { get; set; }
-        public Guid? IdGradoEstudio { get; set; }
+        public int? IdGradoEstudio { get; set; }
         [ForeignKey("IdTipoEmpleado")]
         public virtual TipoEmpleado? TipoEmpleado { get; set; }
-        public Guid? IdTipoEmpleado { get; set; }
+        public int? IdTipoEmpleado { get; set; }
         public bool IsDeleted { get; set; }
         public DateTime? DeletedOnUtc { get; set; }
     }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeCRUD.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240617175111_Initial")]
+    [Migration("20240618170745_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,9 +27,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Direccion", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CP")
                         .HasColumnType("int");
@@ -37,11 +39,17 @@ namespace EmployeeCRUD.Data.Migrations
                     b.Property<string>("Calle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("IdEmpleado")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("datetime2");
 
-                    b.Property<Guid>("IdEstado")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("IdEmpleado")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdEstado")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Numero")
                         .HasColumnType("nvarchar(max)");
@@ -55,15 +63,20 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Empleado", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApellidoMaterno")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ApellidoPaterno")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("Edad")
                         .HasColumnType("int");
@@ -72,35 +85,44 @@ namespace EmployeeCRUD.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(1)");
 
-                    b.Property<Guid>("IdDireccion")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdGradoEstudio")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("IdTipoEmpleado")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Nombre")
+                    b.Property<int?>("IdDireccion")
                         .HasColumnType("int");
+
+                    b.Property<int?>("IdGradoEstudio")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("IdTipoEmpleado")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IdDireccion")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[IdDireccion] IS NOT NULL");
 
                     b.HasIndex("IdGradoEstudio");
 
                     b.HasIndex("IdTipoEmpleado");
+
+                    b.HasIndex("IsDeleted")
+                        .HasFilter("IsDeleted = 0");
 
                     b.ToTable("Empleados");
                 });
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Estado", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -112,9 +134,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.GradoEstudio", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -126,18 +150,26 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.Telefono", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("EmpleadoId")
-                        .HasColumnType("uniqueidentifier");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("DeletedOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmpleadoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Extension")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("IdEmpleado")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("IdEmpleado")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
@@ -154,9 +186,11 @@ namespace EmployeeCRUD.Data.Migrations
 
             modelBuilder.Entity("EmployeeCRUD.Data.Entities.TipoEmpleado", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -181,21 +215,15 @@ namespace EmployeeCRUD.Data.Migrations
                 {
                     b.HasOne("EmployeeCRUD.Data.Entities.Direccion", "Direccion")
                         .WithOne("Empleado")
-                        .HasForeignKey("EmployeeCRUD.Data.Entities.Empleado", "IdDireccion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EmployeeCRUD.Data.Entities.Empleado", "IdDireccion");
 
                     b.HasOne("EmployeeCRUD.Data.Entities.GradoEstudio", "GradoEstudio")
                         .WithMany()
-                        .HasForeignKey("IdGradoEstudio")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdGradoEstudio");
 
                     b.HasOne("EmployeeCRUD.Data.Entities.TipoEmpleado", "TipoEmpleado")
                         .WithMany()
-                        .HasForeignKey("IdTipoEmpleado")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdTipoEmpleado");
 
                     b.Navigation("Direccion");
 
