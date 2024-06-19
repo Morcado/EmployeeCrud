@@ -4,9 +4,13 @@ using EmployeeCRUD.Data.Entities;
 using EmployeeCRUD.Data.Models;
 using EmployeeCRUD.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using System.Formats.Asn1;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Globalization;
+using EmployeeCrud.API.PDF;
+using QuestPDF.Fluent;
+using System.Net.Mime;
+using Azure.Core;
+using QuestPDF.Infrastructure;
+using QuestPDF;
 
 namespace EmployeeCrud.API.Controllers
 {
@@ -87,11 +91,11 @@ namespace EmployeeCrud.API.Controllers
             return NoContent();
         }
 
-        [HttpGet("csv", Name = "GetEmpleadoCSV")]
+        [HttpGet("csv", Name = "GetEmpleadosCSV")]
         public async Task<IActionResult> GetEmpleadoCSV()
         {
             var empleados = await empleadoRepository.GetEmpleadosCSV();
-            
+
             using (var memoryStream = new MemoryStream())
             {
                 using (var streamWriter = new StreamWriter(memoryStream))
@@ -102,6 +106,19 @@ namespace EmployeeCrud.API.Controllers
 
                 return File(memoryStream.ToArray(), "text/csv", $"Export-{DateTime.Now.ToString("s")}.csv");
             }
+        }
+
+        [HttpGet("{id}/pdf", Name = "GetEmpleadoPDF")]
+        public async Task<IActionResult> GetEmpleadoPDF(int id)
+        {
+            Settings.License = LicenseType.Community;
+
+            var empleado = await empleadoRepository.GetEmpleadoByID(id);
+            var empleadoViewModel = mapper.Map<EmpleadoDto>(empleado);
+
+            var document = new EmpleadoDocument(empleadoViewModel);
+            var file = document.GeneratePdf();
+            return File(file, "application/pdf");
         }
     }
     

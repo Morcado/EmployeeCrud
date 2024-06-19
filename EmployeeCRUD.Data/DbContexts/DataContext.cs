@@ -21,5 +21,8 @@ namespace EmployeeCRUD.Data.DbContexts
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Direccion> Direcciones { get; set; }
         public DbSet<Telefono> Telefonos { get; set; }
+        public DbSet<Estado> Estado { get; set; }
+        public DbSet<GradoEstudio> GradoEstudio { get; set; }
+        public DbSet<TipoEmpleado> TipoEmpleado { get; set; }
     }
 }
