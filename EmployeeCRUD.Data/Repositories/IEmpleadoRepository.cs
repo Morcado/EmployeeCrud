@@ -5,6 +5,7 @@ namespace EmployeeCRUD.Data.Repositories
     public interface IEmpleadoRepository : IDisposable
     {
         Task<IEnumerable<Empleado>> GetEmpleados();
+        Task<IEnumerable<Empleado>> GetEmpleadosCSV();
         Task<Empleado?> GetEmpleadoByID(int? id);
         Task InsertEmpleado(Empleado empleado);
         Task DeleteEmpleado(int? id);

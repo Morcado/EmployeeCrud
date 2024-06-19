@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using CsvHelper;
 using EmployeeCRUD.Data.Entities;
 using EmployeeCRUD.Data.Models;
 using EmployeeCRUD.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Formats.Asn1;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Globalization;
 
 namespace EmployeeCrud.API.Controllers
 {
@@ -81,6 +85,23 @@ namespace EmployeeCrud.API.Controllers
             await empleadoRepository.DeleteEmpleado(id);
             await empleadoRepository.SaveAsync();
             return NoContent();
+        }
+
+        [HttpGet("csv", Name = "GetEmpleadoCSV")]
+        public async Task<IActionResult> GetEmpleadoCSV()
+        {
+            var empleados = await empleadoRepository.GetEmpleadosCSV();
+            
+            using (var memoryStream = new MemoryStream())
+            {
+                using (var streamWriter = new StreamWriter(memoryStream))
+                using (var csvWriter = new CsvWriter(streamWriter, CultureInfo.InvariantCulture))
+                {
+                    csvWriter.WriteRecords(mapper.Map<EmpleadoViewModel[]>(empleados));
+                }
+
+                return File(memoryStream.ToArray(), "text/csv", $"Export-{DateTime.Now.ToString("s")}.csv");
+            }
         }
     }
     

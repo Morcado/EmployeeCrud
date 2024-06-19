@@ -39,6 +39,16 @@ namespace EmployeeCRUD.Data.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<Empleado>> GetEmpleadosCSV()
+        {
+            return await context.Empleados
+                .Include(b => b.Telefonos)
+                .Include(b => b.Direccion)
+                .Include(b => b.GradoEstudio)
+                .Include(b => b.TipoEmpleado)
+                .ToListAsync();
+        }
+
         public async Task InsertEmpleado(Empleado empleado)
         {
             ArgumentNullException.ThrowIfNull(empleado);

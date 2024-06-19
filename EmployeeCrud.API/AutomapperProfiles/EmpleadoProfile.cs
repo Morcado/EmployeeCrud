@@ -27,6 +27,13 @@ namespace EmployeeCrud.API.AutomapperProfiles
                 .ForMember(src => src.IdDireccion, p => p.MapFrom(a => a.IdDireccion))
                 .ForMember(src => src.IdGradoEstudio, p => p.MapFrom(a => a.IdGradoEstudio))
                 .ForMember(src => src.IdTipoEmpleado, p => p.MapFrom(a => a.IdTipoEmpleado));
+            
+            CreateMap<Empleado, EmpleadoViewModel>()
+                .ForMember(src => src.Nombre, p => p.MapFrom(a => a.Nombre))
+                .ForMember(src => src.ApellidoPaterno, p => p.MapFrom(a => a.ApellidoPaterno))
+                .ForMember(src => src.ApellidoMaterno, p => p.MapFrom(a => a.ApellidoMaterno))
+                .ForMember(src => src.Edad, p => p.MapFrom(a => a.Edad))
+                .ForMember(src => src.Genero, p => p.MapFrom(a => a.Genero));
 
             CreateMap<EmpleadoUpdateDto, Empleado>()
                 .ForMember(src => src.Nombre, p => p.MapFrom(a => a.Nombre))
